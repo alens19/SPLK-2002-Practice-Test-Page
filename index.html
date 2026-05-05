@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#1A1225" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>SPLK-2002 // Architect Drill</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Global dark gradient background -->
+    <div class="app-bg"></div>
+
+    <!-- Top orange accent line -->
+    <div class="corner-deco"></div>
+
+    <div class="app">
+      <!-- ══════════════════════════════
+       HOME SCREEN
+       ══════════════════════════════ -->
+      <div id="screen-home" class="screen active">
+        <div class="header">
+          <div class="logo">SPLK <span>- 2002</span></div>
+          <div class="tagline">
+            Exámen de Práctica para Splunk Enterprise Architect Cert
+          </div>
+        </div>
+
+        <div class="section-label">Select Mode</div>
+
+        <div class="modes">
+          <div class="mode-card" onclick="startMode('short')">
+            <span class="mode-icon">⚡</span>
+            <div class="mode-title">Quick Drill</div>
+            <div class="mode-desc">
+              10 preguntas aleatorias. Feedback inmediato. Ideal para
+              calentamiento diario.
+            </div>
+          </div>
+          <div class="mode-card" onclick="startMode('flash')">
+            <span class="mode-icon">📃</span>
+            <div class="mode-title">Flashcards</div>
+            <div class="mode-desc">
+              Las 90 preguntas. Click para revelar respuesta. Repaso
+              auto-dirigido.
+            </div>
+          </div>
+          <div class="mode-card" onclick="startMode('full')">
+            <span class="mode-icon">🗂️</span>
+            <div class="mode-title">Full Exam</div>
+            <div class="mode-desc">
+              90 preguntas con puntaje. Simula condiciones reales. Passing: 70%.
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-item"><strong>90</strong> Questions</div>
+          <div class="stat-item"><strong>SPLK-2002</strong> v12.95</div>
+          <div class="stat-item"><strong>70%</strong> Passing</div>
+        </div>
+
+        <div class="verified-banner">
+          <span class="verified-icon">✔</span>
+          <div>
+            <div class="verified-title">Preguntas verificadas</div>
+            <div class="verified-sub">
+              Todas las respuestas fueron validadas con el foro de
+              <strong>ExamTopics</strong> y la documentación oficial de
+              <strong>Splunk</strong>. Este sitio es un recurso de práctica
+              comunitario, sin afiliación con Splunk Inc.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+       QUIZ SCREEN
+       ══════════════════════════════ -->
+      <div id="screen-quiz" class="screen">
+        <!-- White card -->
+        <div class="quiz-card">
+          <!-- Card header: brand + progress + timer -->
+          <div class="quiz-card-header">
+            <div class="quiz-brand">SPLK <span>- 2002</span></div>
+
+            <div class="quiz-progress-wrap">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+            </div>
+
+            <div class="quiz-meta">
+              <span class="quiz-mode-badge" id="quiz-mode-label"
+                >Full Exam</span
+              >
+              <div class="quiz-timer">
+                <span class="quiz-timer-icon">⏱</span>
+                <span id="timer-display">00:00 Min</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card body: question + options -->
+          <div class="quiz-card-body">
+            <div class="question-num" id="question-num">Pregunta 1</div>
+            <div class="question-text" id="question-text"></div>
+            <div class="multi-hint" id="multi-hint">
+              ▸ Select all that apply
+            </div>
+            <div class="options" id="options-container"></div>
+            <div class="explanation" id="explanation">
+              <strong>Explanation</strong>
+              <span id="explanation-text"></span>
+            </div>
+          </div>
+
+          <!-- Card footer: actions -->
+          <div class="quiz-card-footer">
+            <div class="action-row">
+              <button class="btn btn-ghost" onclick="goHome()">Salir</button>
+              <div class="action-right">
+                <button
+                  class="btn btn-primary"
+                  id="btn-check"
+                  onclick="checkAnswer()"
+                  disabled
+                >
+                  Check
+                </button>
+                <button
+                  class="btn btn-primary"
+                  id="btn-next"
+                  onclick="nextQuestion()"
+                  style="display: none"
+                >
+                  Siguiente →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /quiz-card -->
+      </div>
+
+      <!-- ══════════════════════════════
+       FLASHCARD SCREEN
+       ══════════════════════════════ -->
+      <div id="screen-flash" class="screen">
+        <div class="quiz-header">
+          <div class="section-label">Flashcards</div>
+          <div class="progress-info">
+            Card <strong id="fc-cur">1</strong> / <span id="fc-tot">90</span>
+          </div>
+        </div>
+        <div class="progress-bar" style="margin-bottom: 20px">
+          <div class="progress-fill" id="fc-progress"></div>
+        </div>
+
+        <div class="fc-hint">Click en la tarjeta para ver la respuesta</div>
+
+        <div class="fc-wrapper" onclick="flipCard()">
+          <div class="fc-inner" id="fc-inner">
+            <div class="fc-face fc-front">
+              <div class="fc-label">Pregunta</div>
+              <div class="fc-content" id="fc-question"></div>
+            </div>
+            <div class="fc-face fc-back">
+              <div class="fc-label">Respuesta</div>
+              <div class="fc-content" id="fc-answer"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fc-nav">
+          <button class="btn btn-ghost" onclick="fcMove(-1)">← Anterior</button>
+          <span class="fc-counter" id="fc-counter">001 / 090</span>
+          <button class="btn btn-primary" onclick="fcMove(1)">
+            Siguiente →
+          </button>
+        </div>
+
+        <div class="fc-footer">
+          <button class="btn btn-ghost" onclick="shuffleFlash()">
+            ⇌ Mezclar
+          </button>
+          <button class="btn btn-ghost" onclick="goHome()">← Menú</button>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+       RESULTS SCREEN
+       ══════════════════════════════ -->
+      <div id="screen-result" class="screen">
+        <div class="result-header">
+          <div class="score-display" id="score-pct">--</div>
+          <div class="score-label">Score</div>
+          <div class="grade-tag" id="grade-tag">Evaluating</div>
+        </div>
+
+        <div class="result-breakdown" id="result-breakdown"></div>
+
+        <div class="section-label">Review</div>
+        <div class="review-list" id="review-list"></div>
+
+        <div class="result-actions">
+          <button class="btn btn-primary" onclick="retakeSame()">
+            Retomar
+          </button>
+          <button class="btn btn-ghost" onclick="goHome()">← Menú</button>
+        </div>
+      </div>
+    </div>
+    <!-- /app -->
+
+    <!-- Ticker -->
+    <div class="ticker">
+      <div class="ticker-track">
+        <span
+          >SPLK-2002 ◈ INDEXER CLUSTERING ◈ SEARCH HEAD CLUSTER ◈ FORWARDER
+          MANAGEMENT ◈ LICENSE SERVER ◈ DEPLOYMENT PLANNING ◈ BTOOL ◈
+          REPLICATION FACTOR ◈ SEARCH FACTOR ◈ PROPS.CONF ◈ INDEXES.CONF ◈
+          MONITORING CONSOLE ◈ CAPTAIN ELECTION ◈ RAFT CONSENSUS ◈ KV STORE ◈
+          MULTISITE CLUSTERING ◈ DATA PIPELINE ◈ BUCKET LIFECYCLE ◈ DIAG FILES ◈
+          UNIVERSAL FORWARDER ◈ PARALLELISM ◈ SITE AFFINITY</span
+        >
+        <span
+          >SPLK-2002 ◈ INDEXER CLUSTERING ◈ SEARCH HEAD CLUSTER ◈ FORWARDER
+          MANAGEMENT ◈ LICENSE SERVER ◈ REPLICATION FACTOR ◈ SEARCH FACTOR ◈
+          MONITORING CONSOLE</span
+        >
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
