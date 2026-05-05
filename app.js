@@ -725,10 +725,10 @@ const QUESTIONS = [
   {
     q: "Which search will show all deployment client messages from the client (UF)?",
     opts: [
-      {k:"A", t:"index=_audit component=DC* host=<ds> | stats count by message"},
-      {k:"B", t:"index=_audit component=DC* host=<uf> | stats count by message"},
-      {k:"C", t:"index=_internal component=DC* host=<uf> | stats count by message"},
-      {k:"D", t:"index=_internal component=DS* host=<ds> | stats count by message"}
+      {k:"A", t:"index=_audit component=DC* host=[deployment-server] | stats count by message"},
+      {k:"B", t:"index=_audit component=DC* host=[universal-forwarder] | stats count by message"},
+      {k:"C", t:"index=_internal component=DC* host=[universal-forwarder] | stats count by message"},
+      {k:"D", t:"index=_internal component=DS* host=[deployment-server] | stats count by message"}
     ],
     ans: [2], multi: false,
     explain: "Deployment client (DC) messages are in _internal (not _audit). The host must be the UF/client, and component=DC* filters for DeploymentClient components."
@@ -1126,7 +1126,7 @@ function renderQuestion() {
     const btn = document.createElement('button');
     btn.className = 'option-btn';
     btn.dataset.idx = i;
-    btn.innerHTML = `<span class="option-key"></span><span class="option-text">${opt.k}. ${opt.t}</span>`;
+    const circle = document.createElement("span"); circle.className = "option-key"; const label = document.createElement("span"); label.className = "option-text"; label.textContent = opt.k + ". " + opt.t; btn.appendChild(circle); btn.appendChild(label);
     btn.onclick = () => toggleOption(i, q.multi);
     container.appendChild(btn);
   });
