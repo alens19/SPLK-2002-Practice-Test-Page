@@ -6,7 +6,7 @@ Vibecoded page | Practica para SPLK  - 2002 Architect Cert
 > Practice tool for the **Splunk SPLK-2002 Splunk Enterprise Certified Architect** exam.  
 > 90 verified questions · 3 study modes · No backend, no login, no cost.
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-orange?style=flat-square)](https://yourusername.github.io/splk-drill)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-orange?style=flat-square)](https://alens19.github.io/splk-drill)
 ![Questions](https://img.shields.io/badge/Questions-90-orange?style=flat-square)
 ![Passing](https://img.shields.io/badge/Passing%20Score-70%25-green?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
@@ -44,19 +44,6 @@ All answers were cross-validated against the **ExamTopics community forum** and 
 
 ---
 
-## 🚀 Quick Start
-
-No installation needed. Just open `index.html` in a browser — or visit the live hosted version.
-
-```bash
-git clone https://github.com/yourusername/splk-drill.git
-cd splk-drill
-open index.html   # macOS
-# or just drag index.html into your browser
-```
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -67,15 +54,6 @@ splk-drill/
 ```
 
 No frameworks. No npm. No build step. Pure HTML + CSS + JS — loads instantly on any device.
-
----
-
-## 🛠 Deploy to GitHub Pages (free, 2 minutes)
-
-1. Fork or clone this repo
-2. Go to **Settings → Pages**
-3. Set Source → Branch: `main` → Folder: `/ (root)`
-4. Save — your URL will be: `https://yourusername.github.io/splk-drill`
 
 ---
 
