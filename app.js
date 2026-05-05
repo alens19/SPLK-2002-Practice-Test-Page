@@ -1112,7 +1112,7 @@ function renderQuestion() {
 
   // question number label
   const numEl = document.getElementById('question-num');
-  if (numEl) numEl.textContent = `Pregunta ${num} de ${tot}`;
+  if (numEl) numEl.textContent = `Question ${num} of ${tot}`;
 
   document.getElementById('question-text').textContent = q.q;
 
@@ -1183,7 +1183,7 @@ function checkAnswer() {
   document.getElementById('btn-check').style.display = 'none';
   document.getElementById('btn-next').style.display  = 'inline-block';
 
-  showToast(correct ? '✓ Correcto' : '✗ Incorrecto');
+  showToast(correct ? '✓ Correct' : '✗ Incorrect');
 }
 
 function nextQuestion() {
@@ -1222,11 +1222,11 @@ function showResults() {
   document.getElementById('result-breakdown').innerHTML = `
     <div class="breakdown-item">
       <div class="breakdown-num" style="color:var(--correct)">${correct}</div>
-      <div class="breakdown-label">Correctas</div>
+      <div class="breakdown-label">Correct</div>
     </div>
     <div class="breakdown-item">
       <div class="breakdown-num" style="color:var(--wrong)">${wrong}</div>
-      <div class="breakdown-label">Incorrectas</div>
+      <div class="breakdown-label">Incorrect</div>
     </div>
     <div class="breakdown-item">
       <div class="breakdown-num" style="color:var(--orange)">${total}</div>
@@ -1249,8 +1249,8 @@ function showResults() {
     item.innerHTML = `
       <div class="review-q">${r.correct ? '✓' : '✗'} ${q.q}</div>
       <div class="review-a">
-        Correcta: <span class="correct-ans">${correctKeys}</span>
-        ${!r.correct ? ` · Tu respuesta: <span class="wrong-ans">${yourKeys}</span>` : ''}
+        Correct: <span class="correct-ans">${correctKeys}</span>
+        ${!r.correct ? ` · Your answer: <span class="wrong-ans">${yourKeys}</span>` : ''}
       </div>
     `;
     reviewList.appendChild(item);
@@ -1296,7 +1296,7 @@ function shuffleFlash() {
   fcDeck  = shuffle([...Array(QUESTIONS.length).keys()]);
   fcIndex = 0;
   renderFlashcard();
-  showToast('⇌ Deck mezclado');
+  showToast('⇌ Deck shuffled');
 }
 
 // ─────────────────────────────────────────────────────────
