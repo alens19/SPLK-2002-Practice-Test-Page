@@ -1678,7 +1678,7 @@ function checkAnswer() {
   answered = true;
 
   const qi  = deck[qIndex];
-  const q   = QUESTIONS[qi];
+  const q   = currentMode === 'extra' ? EXTRA_QUESTIONS[qi] : QUESTIONS[qi];
   const sel = [...selectedOpts].sort();
   const ans = [...q.ans].sort();
   const correct = JSON.stringify(sel) === JSON.stringify(ans);
@@ -1754,10 +1754,11 @@ function showResults() {
     </div>
   `;
 
+  const qBank = currentMode === 'extra' ? EXTRA_QUESTIONS : QUESTIONS;
   const reviewList = document.getElementById('review-list');
   reviewList.innerHTML = '';
   results.forEach(r => {
-    const q    = QUESTIONS[r.qi];
+    const q    = qBank[r.qi];
     const item = document.createElement('div');
     item.className = 'review-item ' + (r.correct ? 'ok' : 'bad');
     const yourKeys    = r.selected.map(i => q.opts[i].k).join(', ') || '—';
