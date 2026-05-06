@@ -116,6 +116,13 @@
             </div>
           </div>
         </div>
+
+        <!-- Score history for full exam -->
+        <div
+          id="score-history"
+          style="display: none"
+          class="score-history-panel"
+        ></div>
       </div>
 
       <!-- QUIZ -->
@@ -268,6 +275,30 @@
       </div>
     </div>
     <!-- /app -->
+
+    <!-- Confetti canvas -->
+    <canvas
+      id="confetti-canvas"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+      "
+    ></canvas>
+
+    <!-- Confetti canvas (fullscreen overlay) -->
+    <canvas
+      id="confetti-canvas"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9998;
+      "
+    ></canvas>
 
     <div class="ticker">
       <div class="ticker-track">

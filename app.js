@@ -1523,6 +1523,7 @@ function showScreen(id) {
 function goHome() {
   stopTimer();
   showScreen('home');
+  renderHistory();
 }
 
 // ─────────────────────────────────────────────────────────
@@ -1884,6 +1885,138 @@ function filterReview() {
   document.getElementById('review-count').textContent = filtered.length;
 }
 
+
+// ─────────────────────────────────────────────────────────
+// FLAGGED — RETRY & REVIEW
+// ─────────────────────────────────────────────────────────
+
+
+// ─────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────
+// FLAGGED — RETRY & REVIEW
+// ─────────────────────────────────────────────────────────
+
+
+// SCORE HISTORY (localStorage)
+// ─────────────────────────────────────────────────────────
+
+function saveScore(pct, correct, total, secs) {
+  try {
+    const history = JSON.parse(localStorage.getItem('splk_history') || '[]');
+    const m = String(Math.floor(secs / 60)).padStart(2,'0');
+    const s = String(secs % 60).padStart(2,'0');
+    history.unshift({
+      pct, correct, total,
+      time: m + ':' + s,
+      date: new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+    });
+    localStorage.setItem('splk_history', JSON.stringify(history.slice(0, 10)));
+    renderHistory();
+  } catch(e) {}
+}
+
+function renderHistory() {
+  const el = document.getElementById('score-history');
+  if (!el) return;
+  try {
+    const history = JSON.parse(localStorage.getItem('splk_history') || '[]');
+    if (!history.length) { el.style.display = 'none'; return; }
+    el.style.display = 'block';
+    el.innerHTML = '<div class="history-title">Recent Full Exam Scores</div>' +
+      history.map(h => `
+        <div class="history-row">
+          <span class="history-date">${h.date}</span>
+          <span class="history-score ${h.pct >= 70 ? 'pass' : h.pct >= 55 ? 'close' : 'fail'}">${h.pct}%</span>
+          <span class="history-detail">${h.correct}/${h.total} · ${h.time}</span>
+        </div>
+      `).join('');
+  } catch(e) {}
+}
+
+// ─────────────────────────────────────────────────────────
+// CONFETTI
+// ─────────────────────────────────────────────────────────
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  if (!canvas) return;
+  canvas.style.display = 'block';
+  const ctx = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#FF6B2B','#FF8C55','#FFB830','#00C8FF','#A855F7','#10B981'];
+  const pieces = Array.from({length: 120}, () => ({
+    x: Math.random() * canvas.width,
+    y: -10 - Math.random() * 200,
+    w: 6 + Math.random() * 8,
+    h: 10 + Math.random() * 6,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * Math.PI * 2,
+    vx: (Math.random() - 0.5) * 3,
+    vy: 2 + Math.random() * 3,
+    vr: (Math.random() - 0.5) * 0.15,
+    opacity: 1
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    pieces.forEach(p => {
+      if (p.y < canvas.height + 20) { alive = true; }
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.rot += p.vr;
+      p.vy  += 0.05; // gravity
+      if (frame > 80) p.opacity = Math.max(0, p.opacity - 0.012);
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive && frame < 180) requestAnimationFrame(draw);
+    else canvas.style.display = 'none';
+  }
+  draw();
+}
+
+// ─────────────────────────────────────────────────────────
+// KEYBOARD SHORTCUTS
+// ─────────────────────────────────────────────────────────
+
+document.addEventListener('keydown', (e) => {
+  // Only in quiz screen
+  const quizScreen = document.getElementById('screen-quiz');
+  if (!quizScreen || !quizScreen.classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT') return;
+
+  const key = e.key.toUpperCase();
+
+  // A B C D — select option
+  if (['A','B','C','D'].includes(key) && !answered) {
+    const idx = ['A','B','C','D'].indexOf(key);
+    const btns = document.querySelectorAll('.option-btn');
+    if (btns[idx]) btns[idx].click();
+    return;
+  }
+
+  // Enter / Space — check or next
+  if (key === 'ENTER' || key === ' ') {
+    e.preventDefault();
+    const checkBtn = document.getElementById('btn-check');
+    const nextBtn  = document.getElementById('btn-next');
+    if (nextBtn && nextBtn.style.display !== 'none') { nextBtn.click(); return; }
+    if (checkBtn && !checkBtn.disabled) { checkBtn.click(); return; }
+  }
+
+});
+
 // UTILITIES
 // ─────────────────────────────────────────────────────────
 
@@ -1901,3 +2034,6 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 1800);
 }
+
+// Init
+renderHistory();
