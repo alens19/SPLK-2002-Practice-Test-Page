@@ -970,3 +970,12 @@ body {
 .history-score.pass  { color: var(--correct); }
 .history-score.close { color: var(--warn); }
 .history-score.fail  { color: var(--wrong); }
+
+/* ── SHORTCUTS HINT ── */
+.shortcuts-hint {
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-3, #9A958E);
+  letter-spacing: .5px;
+  margin-top: 8px;
+}
