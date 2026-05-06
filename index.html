@@ -2,13 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <meta name="theme-color" content="#1A1225" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <title>🖥️ SPLK-2002 | Practice Exam</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -16,36 +25,79 @@
     <div class="corner-deco"></div>
 
     <div class="app">
-
       <!-- HOME -->
       <div id="screen-home" class="screen active">
         <div class="header">
           <div class="logo">SPLK <span>- 2002</span></div>
-          <div class="tagline">Practice Exam for Splunk Enterprise Architect Certification</div>
+          <div class="tagline">
+            Practice Exam for Splunk Enterprise Architect Certification
+          </div>
         </div>
 
         <div class="section-label">Select Mode</div>
 
         <div class="modes">
+          <!-- Row 1 -->
           <div class="mode-card" onclick="startMode('short')">
             <span class="mode-icon">⚡</span>
             <div class="mode-title">Quick Drill</div>
-            <div class="mode-desc">10 random questions with instant feedback. Best for daily warmup.</div>
+            <div class="mode-desc">
+              10 random questions with instant feedback. Best for daily warmup.
+            </div>
           </div>
           <div class="mode-card" onclick="startMode('flash')">
             <span class="mode-icon">📃</span>
             <div class="mode-title">Flashcards</div>
-            <div class="mode-desc">All 90 questions. Click to reveal the answer. Self-paced review.</div>
+            <div class="mode-desc">
+              All 90 verified questions. Click to reveal the answer. Self-paced
+              review.
+            </div>
           </div>
           <div class="mode-card" onclick="startMode('full')">
             <span class="mode-icon">🗂️</span>
             <div class="mode-title">Full Exam</div>
-            <div class="mode-desc">All 90 questions, scored with timer. Simulates real exam conditions. Passing: 70%.</div>
+            <div class="mode-desc">
+              All 90 questions, scored with timer. Simulates real exam
+              conditions. Passing: 70%.
+            </div>
+          </div>
+          <!-- Row 2 -->
+          <div class="mode-card mode-card--extra" onclick="startMode('extra')">
+            <span class="mode-icon">🧪</span>
+            <div class="mode-title">AI Extended</div>
+            <div class="mode-desc">
+              10 random questions from the extended bank. AI-assisted answers.
+            </div>
+            <div class="extra-badge">AI-Assisted · Not Verified</div>
+          </div>
+          <div
+            class="mode-card mode-card--review mode-card--extra"
+            onclick="startMode('review-extra')"
+          >
+            <span class="mode-icon">📖</span>
+            <div class="mode-title">Review AI</div>
+            <div class="mode-desc">
+              Browse all 79 AI extended questions with answers and explanations.
+              No quiz.
+            </div>
+            <div class="extra-badge">AI-Assisted · Not Verified</div>
+          </div>
+          <div
+            class="mode-card mode-card--review"
+            onclick="startMode('review-all')"
+          >
+            <span class="mode-icon">📚</span>
+            <div class="mode-title">Review All</div>
+            <div class="mode-desc">
+              Browse all 90 verified questions with correct answers and
+              explanations.
+            </div>
           </div>
         </div>
 
         <div class="stats-bar">
-          <div class="stat-item"><strong>90</strong> Questions</div>
+          <div class="stat-item"><strong>90</strong> Verified Qs</div>
+          <div class="stat-item"><strong>79</strong> AI Extended</div>
           <div class="stat-item"><strong>SPLK-2002</strong></div>
           <div class="stat-item"><strong>70%</strong> Passing</div>
         </div>
@@ -55,7 +107,12 @@
           <div>
             <div class="verified-title">Verified Questions</div>
             <div class="verified-sub">
-              All answers were validated against the <strong>ExamTopics</strong> community forum and official <strong>Splunk</strong> documentation. This is an independent community study resource and <strong> is not affiliated </strong> with Splunk Inc.
+              All answers in the main modes were validated against community
+              discussion forums and official
+              <strong>Splunk</strong> documentation. The
+              <strong>AI Extended</strong> section contains additional questions
+              answered using Splunk docs and AI reasoning — treat them as study
+              aids, not ground truth.
             </div>
           </div>
         </div>
@@ -72,7 +129,9 @@
               </div>
             </div>
             <div class="quiz-meta">
-              <span class="quiz-mode-badge" id="quiz-mode-label">Full Exam</span>
+              <span class="quiz-mode-badge" id="quiz-mode-label"
+                >Full Exam</span
+              >
               <div class="quiz-timer">
                 <span class="quiz-timer-icon">⏱</span>
                 <span id="timer-display">00:00 Min</span>
@@ -82,8 +141,14 @@
 
           <div class="quiz-card-body">
             <div class="question-num" id="question-num">Question 1</div>
+            <div class="ai-disclaimer" id="ai-disclaimer">
+              🧪 AI-assisted answer — verify with official Splunk documentation
+              before your exam.
+            </div>
             <div class="question-text" id="question-text"></div>
-            <div class="multi-hint" id="multi-hint">▸ Select all that apply</div>
+            <div class="multi-hint" id="multi-hint">
+              ▸ Select all that apply
+            </div>
             <div class="options" id="options-container"></div>
             <div class="explanation" id="explanation">
               <strong>Explanation</strong>
@@ -95,8 +160,22 @@
             <div class="action-row">
               <button class="btn btn-ghost" onclick="goHome()">Exit</button>
               <div class="action-right">
-                <button class="btn btn-primary" id="btn-check" onclick="checkAnswer()" disabled>Check</button>
-                <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" style="display:none">Next →</button>
+                <button
+                  class="btn btn-primary"
+                  id="btn-check"
+                  onclick="checkAnswer()"
+                  disabled
+                >
+                  Check
+                </button>
+                <button
+                  class="btn btn-primary"
+                  id="btn-next"
+                  onclick="nextQuestion()"
+                  style="display: none"
+                >
+                  Next →
+                </button>
               </div>
             </div>
           </div>
@@ -107,9 +186,11 @@
       <div id="screen-flash" class="screen">
         <div class="quiz-header">
           <div class="section-label">Flashcards</div>
-          <div class="progress-info">Card <strong id="fc-cur">1</strong> / <span id="fc-tot">90</span></div>
+          <div class="progress-info">
+            Card <strong id="fc-cur">1</strong> / <span id="fc-tot">90</span>
+          </div>
         </div>
-        <div class="progress-bar" style="margin-bottom:20px">
+        <div class="progress-bar" style="margin-bottom: 20px">
           <div class="progress-fill" id="fc-progress"></div>
         </div>
 
@@ -135,7 +216,34 @@
         </div>
 
         <div class="fc-footer">
-          <button class="btn btn-ghost" onclick="shuffleFlash()">⇌ Shuffle</button>
+          <button class="btn btn-ghost" onclick="shuffleFlash()">
+            ⇌ Shuffle
+          </button>
+          <button class="btn btn-ghost" onclick="goHome()">← Menu</button>
+        </div>
+      </div>
+
+      <!-- REVIEW SCREEN -->
+      <div id="screen-review" class="screen">
+        <div class="quiz-header">
+          <div class="section-label" id="review-label">Review All</div>
+          <div class="progress-info">
+            <strong id="review-count">90</strong> questions
+          </div>
+        </div>
+
+        <div class="review-search">
+          <input
+            type="text"
+            id="review-filter"
+            placeholder="Filter questions..."
+            oninput="filterReview()"
+          />
+        </div>
+
+        <div id="review-all-list" class="review-all-list"></div>
+
+        <div style="margin-top: 20px; text-align: center">
           <button class="btn btn-ghost" onclick="goHome()">← Menu</button>
         </div>
       </div>
@@ -158,13 +266,25 @@
           <button class="btn btn-ghost" onclick="goHome()">← Menu</button>
         </div>
       </div>
-
-    </div><!-- /app -->
+    </div>
+    <!-- /app -->
 
     <div class="ticker">
       <div class="ticker-track">
-        <span>SPLK-2002 ◈ INDEXER CLUSTERING ◈ SEARCH HEAD CLUSTER ◈ FORWARDER MANAGEMENT ◈ LICENSE SERVER ◈ DEPLOYMENT PLANNING ◈ BTOOL ◈ REPLICATION FACTOR ◈ SEARCH FACTOR ◈ PROPS.CONF ◈ INDEXES.CONF ◈ MONITORING CONSOLE ◈ CAPTAIN ELECTION ◈ RAFT CONSENSUS ◈ KV STORE ◈ MULTISITE CLUSTERING ◈ DATA PIPELINE ◈ BUCKET LIFECYCLE ◈ DIAG FILES ◈ UNIVERSAL FORWARDER ◈ PARALLELISM ◈ SITE AFFINITY</span>
-        <span>SPLK-2002 ◈ INDEXER CLUSTERING ◈ SEARCH HEAD CLUSTER ◈ FORWARDER MANAGEMENT ◈ LICENSE SERVER ◈ REPLICATION FACTOR ◈ SEARCH FACTOR ◈ MONITORING CONSOLE</span>
+        <span
+          >SPLK-2002 ◈ INDEXER CLUSTERING ◈ SEARCH HEAD CLUSTER ◈ FORWARDER
+          MANAGEMENT ◈ LICENSE SERVER ◈ DEPLOYMENT PLANNING ◈ BTOOL ◈
+          REPLICATION FACTOR ◈ SEARCH FACTOR ◈ PROPS.CONF ◈ INDEXES.CONF ◈
+          MONITORING CONSOLE ◈ CAPTAIN ELECTION ◈ RAFT CONSENSUS ◈ KV STORE ◈
+          MULTISITE CLUSTERING ◈ DATA PIPELINE ◈ BUCKET LIFECYCLE ◈ DIAG FILES ◈
+          UNIVERSAL FORWARDER ◈ PARALLELISM ◈ SITE AFFINITY ◈ SMARTSTORE ◈
+          _CONFIGTRACKER ◈ LICENSE HIERARCHY ◈ SCHEDULER.LOG</span
+        >
+        <span
+          >SPLK-2002 ◈ INDEXER CLUSTERING ◈ SEARCH HEAD CLUSTER ◈ FORWARDER
+          MANAGEMENT ◈ LICENSE SERVER ◈ REPLICATION FACTOR ◈ SEARCH FACTOR ◈
+          MONITORING CONSOLE</span
+        >
       </div>
     </div>
 
