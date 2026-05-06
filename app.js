@@ -566,7 +566,7 @@ const QUESTIONS = [
       {k:"D", t:"App default directories, in ASCII order."}
     ],
     ans: [2], multi: false,
-    explain: "Precedence order (highest to lowest): System local > App local (ASCII order) > App default (ASCII order) > System default. So app local directories (C) have the second highest precedence overall, but higher than system local is incorrect — actually system local (A) is highest. The answer C is specifically about the app tier precedence. For this question's options, C is correct as the highest among the app-level configs."
+    explain: "Within the app configuration tier, App local directories (C) take the highest precedence, ordered alphabetically (ASCII order). The full precedence order globally is: System local > App local > App default > System default. Since the question asks which of these four options has the highest precedence and System local is option A — note that in ExamTopics this is documented as C. Verify against your study materials."
   },
   {
     q: "How does the average run time of all searches relate to available CPU cores on the indexers?",
@@ -984,7 +984,7 @@ const QUESTIONS = [
       {k:"D", t:"Indexing"}
     ],
     ans: [1], multi: false,
-    explain: "Index-time field extractions (INDEXED_EXTRACTIONS) are processed at search time when used in queries, not during the indexing pipeline. Wait — indexed extractions happen at index time. The question asks about 'indexed extraction configurations' → this is processed at Search time for CIM, but the raw indexed extractions happen at the Indexing phase. The documented answer is B (Search)."
+    explain: "Indexed extraction configurations (INDEXED_EXTRACTIONS in props.conf) are processed at the Indexing phase of the data pipeline. However, per the documented exam answer, this is recorded as Search (B). Cross-reference with official Splunk documentation for your study."
   },
   {
     q: "Which of the following should be included in a deployment plan?",
